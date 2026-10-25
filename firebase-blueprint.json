@@ -1,0 +1,161 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and overall learning statistics",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User avatar photo URL"
+        },
+        "streakDays": {
+          "type": "number",
+          "description": "Current consecutive active days"
+        },
+        "lastActiveDate": {
+          "type": "string",
+          "description": "YYYY-MM-DD of last practice"
+        },
+        "totalWordsLearned": {
+          "type": "number",
+          "description": "Count of words mastered"
+        },
+        "totalDialoguesCompleted": {
+          "type": "number",
+          "description": "Count of completed dialogues"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "email"]
+    },
+    "WordProgress": {
+      "title": "WordProgress",
+      "description": "User learning progress for an individual vocabulary word",
+      "type": "object",
+      "properties": {
+        "wordId": {
+          "type": "string",
+          "description": "Word identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "learning", "mastered"]
+        },
+        "reviewCount": {
+          "type": "number",
+          "description": "Total times reviewed"
+        },
+        "correctCount": {
+          "type": "number",
+          "description": "Number of times answered correctly"
+        },
+        "lastReviewedAt": {
+          "type": "string"
+        },
+        "starred": {
+          "type": "boolean"
+        }
+      },
+      "required": ["wordId", "userId", "status", "reviewCount", "correctCount"]
+    },
+    "DialogueProgress": {
+      "title": "DialogueProgress",
+      "description": "User completion and practice record for a dialogue",
+      "type": "object",
+      "properties": {
+        "dialogueId": {
+          "type": "string",
+          "description": "Dialogue identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "lastPracticedAt": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        }
+      },
+      "required": ["dialogueId", "userId", "completed"]
+    },
+    "DailyStat": {
+      "title": "DailyStat",
+      "description": "Daily study aggregate metrics for charts",
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "Date formatted as YYYY-MM-DD"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "wordsReviewed": {
+          "type": "number",
+          "description": "Words reviewed on this date"
+        },
+        "dialoguesRead": {
+          "type": "number",
+          "description": "Dialogues practiced on this date"
+        }
+      },
+      "required": ["date", "userId", "wordsReviewed", "dialoguesRead"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Primary user profile document"
+    },
+    "/users/{userId}/wordProgress/{wordId}": {
+      "schema": {
+        "$ref": "#/entities/WordProgress"
+      },
+      "description": "Per-word flashcard review progress"
+    },
+    "/users/{userId}/dialogueProgress/{dialogueId}": {
+      "schema": {
+        "$ref": "#/entities/DialogueProgress"
+      },
+      "description": "Per-dialogue learning completion"
+    },
+    "/users/{userId}/dailyStats/{dateId}": {
+      "schema": {
+        "$ref": "#/entities/DailyStat"
+      },
+      "description": "Daily activity log for charts"
+    }
+  }
+}

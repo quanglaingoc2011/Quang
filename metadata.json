@@ -1,0 +1,8 @@
+{
+  "name": "Tiếng Anh Cho Bé - English for Kids",
+  "description": "Ứng dụng học tiếng Anh đơn giản, thân thiện cho trẻ em với hơn 100 từ vựng theo chủ đề, 20 cuộc hội thoại tương tác tra từ nhanh, flashcards và theo dõi tiến độ.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
